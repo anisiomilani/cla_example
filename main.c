@@ -1,17 +1,30 @@
-
 //
 // Included Files
 //
 #include "driverlib.h"
 #include "device.h"
 #include "board.h"
+#include "scicomm.h"
+#include <math.h>
 
+
+// Parte de compartilhamento de memória
 
 #pragma DATA_SECTION(fVal,"CpuToCla1MsgRAM");
 float fVal;
 #pragma DATA_SECTION(fResult,"Cla1ToCpuMsgRAM");
 float fResult;
 
+
+// Vetores históricos usados na CLA — alocados em RAM compartilhada
+#pragma DATA_SECTION(x, "Cla1ToCpuMsgRAM")
+float x[3] = {0.0f, 0.0f, 0.0f};  // inicializados no main()
+
+#pragma DATA_SECTION(y, "Cla1ToCpuMsgRAM")
+float y[3] = {0.0f, 0.0f, 0.0f};  // inicializados no main()
+
+#pragma DATA_SECTION(REF, "Cla1ToCpuMsgRAM")
+float REF=20.0f;
 
 void main(void)
 {
@@ -25,17 +38,25 @@ void main(void)
         EINT;
         ERTM;
 
-        for(;;)
+        for (;;)
         {
-            CLA_forceTasks(myCLA0_BASE,CLA_TASKFLAG_1);
-            DEVICE_DELAY_US(100000);
+            NOP;
         }
+    }
 
-}
+    // ISR de retorno da CLA (opcional, mantém atualizações sincronizadas)
+    __interrupt void cla1Isr1()
+    {
+        protocolSendData(SCI0_BASE, &fResult,sizeof(float));
+        Interrupt_clearACKGroup(INT_myCLA01_INTERRUPT_ACK_GROUP);
+    }
 
-__interrupt void cla1Isr1 ()
-{
-    fVal = fResult;
-    Interrupt_clearACKGroup(INT_myCLA01_INTERRUPT_ACK_GROUP);
-}
+    __interrupt void INT_SCI0_RX_ISR(void)
+    {
+        protocolReceiveData(SCI0_BASE,&fVal,sizeof(float));
+        CLA_forceTasks(myCLA0_BASE, CLA_TASKFLAG_1);
+        SCI_clearInterruptStatus(SCI0_BASE, SCI_INT_RXFF);
+        Interrupt_clearACKGroup(INT_SCI0_RX_INTERRUPT_ACK_GROUP);
 
+
+    }

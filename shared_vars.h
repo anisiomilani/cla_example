@@ -11,4 +11,10 @@
 extern float fVal;
 extern float fResult;
 
+extern float REF;
+
+extern float x[3];
+extern float y[3];
+
+
 #endif /* SHARED_VARS_H_ */
