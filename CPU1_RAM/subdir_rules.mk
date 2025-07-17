@@ -5,30 +5,30 @@
 SHELL = cmd.exe
 
 # Each subdirectory must supply rules for building sources it contributes
-build-1890061919: ../cla_example.syscfg
+build-1806428945: ../cla_example.syscfg
 	@echo 'Building file: "$<"'
 	@echo 'Invoking: SysConfig'
 	"C:/ti/ccs1281/ccs/utils/sysconfig_1.21.0/sysconfig_cli.bat" --script "C:/ti/tarefa aula/cla_example/cla_example.syscfg" -o "syscfg" -s "C:/ti/c2000/C2000Ware_5_04_00_00/.metadata/sdk.json" -b "/boards/LAUNCHXL_F28379D" --compiler ccs
 	@echo 'Finished building: "$<"'
 	@echo ' '
 
-syscfg/board.c: build-1890061919 ../cla_example.syscfg
-syscfg/board.h: build-1890061919
-syscfg/board.cmd.genlibs: build-1890061919
-syscfg/board.opt: build-1890061919
-syscfg/board.json: build-1890061919
-syscfg/pinmux.csv: build-1890061919
-syscfg/device_cmd.cmd: build-1890061919
-syscfg/device_cmd.c: build-1890061919
-syscfg/device_cmd.h: build-1890061919
-syscfg/device_cmd.opt: build-1890061919
-syscfg/device_cmd.cmd.genlibs: build-1890061919
-syscfg/c2000ware_libraries.cmd.genlibs: build-1890061919
-syscfg/c2000ware_libraries.opt: build-1890061919
-syscfg/c2000ware_libraries.c: build-1890061919
-syscfg/c2000ware_libraries.h: build-1890061919
-syscfg/clocktree.h: build-1890061919
-syscfg: build-1890061919
+syscfg/board.c: build-1806428945 ../cla_example.syscfg
+syscfg/board.h: build-1806428945
+syscfg/board.cmd.genlibs: build-1806428945
+syscfg/board.opt: build-1806428945
+syscfg/board.json: build-1806428945
+syscfg/pinmux.csv: build-1806428945
+syscfg/device_cmd.cmd: build-1806428945
+syscfg/device_cmd.c: build-1806428945
+syscfg/device_cmd.h: build-1806428945
+syscfg/device_cmd.opt: build-1806428945
+syscfg/device_cmd.cmd.genlibs: build-1806428945
+syscfg/c2000ware_libraries.cmd.genlibs: build-1806428945
+syscfg/c2000ware_libraries.opt: build-1806428945
+syscfg/c2000ware_libraries.c: build-1806428945
+syscfg/c2000ware_libraries.h: build-1806428945
+syscfg/clocktree.h: build-1806428945
+syscfg: build-1806428945
 
 syscfg/%.obj: ./syscfg/%.c $(GEN_OPTS) | $(GEN_FILES) $(GEN_MISC_FILES)
 	@echo 'Building file: "$<"'
