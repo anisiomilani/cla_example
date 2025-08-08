@@ -24,7 +24,7 @@ float x[3] = {0.0f, 0.0f, 0.0f};  // inicializados no main()
 float y[3] = {0.0f, 0.0f, 0.0f};  // inicializados no main()
 
 #pragma DATA_SECTION(REF, "Cla1ToCpuMsgRAM")
-float REF=20.0f;
+float REF=30.0f;
 
 void main(void)
 {
